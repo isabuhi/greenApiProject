@@ -4,14 +4,15 @@ import AddIcon from '@mui/icons-material/Add';
 import { useForm } from 'react-hook-form';
 import './index.css'
 import profilePicture from "../../../../assets/images/user.png"
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addAccount } from '../../../../redux/chatSlice';
 
 
 
 function LeftSide({ contactCB }) {
     const dispatch = useDispatch();
-    const [contacts, setContacts] = useState([]);
+
+    const contacts = useSelector((store) => store.chat).addedAccounts;
     const { register, handleSubmit, clearErrors, formState: { errors } } = useForm();
 
     const phoneValid = register(
@@ -36,7 +37,6 @@ function LeftSide({ contactCB }) {
 
     const onSubmit = (data) => {
         if (!contacts.includes(data.phoneNumber)) {
-            setContacts([...contacts, data.phoneNumber])
             dispatch(addAccount(data.phoneNumber))
         }
     }
@@ -86,11 +86,11 @@ function LeftSide({ contactCB }) {
             </div>
             <List sx={{ height: 'calc(100% - 129px)', bgcolor: 'background.paper', overflowY: "scroll" }}>
                 {
-                    contacts.map((phone) => 
-                        <div key={phone}>
+                    contacts.map((contact) => 
+                        <div key={contact.phoneNumber}>
                             <ListItem disablePadding >
-                                <ListItemButton onClick={() => { contactCB(phone) }}>
-                                    {phone}
+                                <ListItemButton onClick={() => { contactCB(contact.phoneNumber) }}>
+                                    {contact.phoneNumber}
                                 </ListItemButton>
                             </ListItem>
                             <Divider />

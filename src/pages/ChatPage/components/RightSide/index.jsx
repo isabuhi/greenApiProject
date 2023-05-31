@@ -31,22 +31,32 @@ function RightSide({ phoneNumber }) {
             chatApi.receiveMessage(profile)
                 .then((response) => {
                     if (response.data) {
-                        const text = response.data.body.messageData.textMessageData.textMessage
-                        dispatch(
-                            addMessage(
-                                {
-                                    phoneNumber,
-                                    message:
+                        const text = response.data?.body?.messageData?.textMessageData?.textMessage
+                        const phoneNumber = "+" + response.data?.body?.from.replace(/\D/g, "")
+                        console.log(phoneNumber)
+                        if(text)
+                            dispatch(
+                                addMessage(
                                     {
-                                        timestamp,
-                                        text,
-                                        key: "received"
+                                        phoneNumber,
+                                        message:
+                                        {
+                                            timestamp,
+                                            text,
+                                            key: "received"
+                                        }
                                     }
-                                }
+                                )
                             )
-                        )
-                        request()
+                        const receiptId = response.data?.receiptId
+                        if (receiptId)
+                            chatApi.deleteMessage({ ...profile, receiptId })
+                                .then(() => {
+                                    request();
+                                })
                     }
+                    else
+                        request()
                 })
                 .catch((error) => {
                     console.log(error)

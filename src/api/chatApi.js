@@ -16,6 +16,7 @@ export const chatApi = {
         )
         return sendPromise;
     },
+
     receiveMessage(data) {
         const receivePromise = instanceAxios.get(
             `waInstance${data.id}/ReceiveNotification/${data.apiToken}`
@@ -27,5 +28,11 @@ export const chatApi = {
             }
         )
         return receivePromise;
+    },
+
+    deleteMessage(data) {
+        return instanceAxios.delete(
+            `waInstance${data.id}/deleteNotification/${data.apiToken}/${data.receiptId}`
+        );
     }
 };

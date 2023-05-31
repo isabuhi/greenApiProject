@@ -19,7 +19,9 @@ export const chatSlice = createSlice({
             state.addedAccounts.find((account, index) => {
                 if (account.phoneNumber === action.payload.phoneNumber) {
                     state.addedAccounts[index].messages.push(action.payload.message)
-                    return true
+                }
+                else {
+                    state.addedAccounts.push(action.payload)
                 }
             })
         }
