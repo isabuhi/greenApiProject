@@ -1,2 +1,0 @@
-C:\Users\Sabuhi\Desktop\greenApiProject\greenApiProject\obj\Debug\greenapiproject.esproj.SuggestedBindingRedirects.cache
-C:\Users\Sabuhi\Desktop\greenApiProject\greenApiProject\obj\Debug\greenapiproject.esproj.CoreCompileInputs.cache
