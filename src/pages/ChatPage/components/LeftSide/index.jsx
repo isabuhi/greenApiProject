@@ -31,12 +31,12 @@ function LeftSide({ contactCB }) {
                 value: 16,
                 message: "Not more 15 digits!"
             },
-            validate: (fieldValue) => { return contacts.includes(fieldValue) ? 'This contact exist!' : null }
+            validate: (fieldValue) => { return contacts.find((contact) => contact.phoneNumber === fieldValue) ? 'This contact exist!' : null }
         }
     )
 
     const onSubmit = (data) => {
-        if (!contacts.includes(data.phoneNumber)) {
+        if (!contacts.find((contact) => contact.phoneNumber === data.phoneNumber)) {
             dispatch(addAccount(data.phoneNumber))
         }
     }
